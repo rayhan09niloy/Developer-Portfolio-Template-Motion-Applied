@@ -3,36 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070c14">
+  <meta name="description" content="Rayhan Ahmed's portfolio website showcasing selected repositories, contribution activity, and contact information.">
+  <meta name="keywords" content="Rayhan Ahmed, Portfolio, Product Designer, Developer, MedTech, FinTech, GitHub, Repositories, Contributions">
+  <meta name="author" content="Rayhan Ahmed">
+  <meta property="og:title" content="Rayhan Ahmed — Portfolio">
+  <meta property="og:description" content="Rayhan Ahmed's portfolio website showcasing selected repositories, contribution activity, and contact information.">
+  <meta property="og:image" content="assets/profile.png">
   <title>Rayhan Ahmed — Portfolio</title>
-  <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- Scanline overlay -->
-  <div class="scanline-overlay"></div>
+  <div class="page-grid" aria-hidden="true"></div>
+  <main class="site-shell">
+    <header class="site-nav">
+      <a class="wordmark" href="#portfolio">@rayhan09niloy</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#portfolio">PORTFOLIO</a>
+        <a href="#repos">REPOS</a>
+        <a href="#activity">ACTIVITY</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="button button-muted" href="terminal.html"><span aria-hidden="true">›_</span> Terminal off</a>
+        <a class="button button-muted github-link" href="https://github.com/rayhan09niloy" target="_blank" rel="noopener noreferrer">View GitHub ↗</a>
+      </div>
+    </header>
 
-  <!-- Floating cursor glow -->
-  <div class="cursor-glow" id="cursorGlow"></div>
-
-  <main class="container">
-
-    <!-- ═══════════════ HERO SECTION (Cybernetic Identity Card) ═══════════════ -->
-    <section class="hero" id="hero">
-      <div class="hero-card" data-animate="fade-up">
-        <!-- Top meta header -->
-        <div class="hero-top-bar">
-          <span class="hero-identity-tag">PORTFOLIO</span>
-          <span class="hero-handle-tag">@rayhan09niloy</span>
-        </div>
-
-        <!-- Hero main content grid -->
-        <div class="hero-body">
-          <div class="hero-content">
-            <p class="hero-greeting" data-animate="fade-up">HELLO, WORLD. I'M</p>
-
-            <pre class="ascii-name" aria-label="Rayhan Ahmed"> /$$$$$$$    /$$$$$$   /$$   /$$  /$$   /$$   /$$$$$$   /$$   /$$
+    <section class="hero-card" id="portfolio" aria-labelledby="hero-heading">
+      <div class="hero-main">
+        <div class="hero-intro">
+          <p class="eyebrow">HELLO, WORLD. I'M</p>
+          <h1 class="visually-hidden" id="hero-heading">Rayhan Ahmed</h1>
+          <pre class="ascii-name" aria-label="Rayhan Ahmed"> /$$$$$$$    /$$$$$$   /$$   /$$  /$$   /$$   /$$$$$$   /$$   /$$
 | $$__  $$  /$$__  $$ |  $$ /$$/ | $$  | $$  /$$__  $$ | $$$ | $$
 | $$  \ $$ | $$  \ $$  \  $$$$/  | $$  | $$ | $$  \ $$ | $$$$| $$
 | $$$$$$$/ | $$$$$$$$   \  $$/   | $$$$$$$$ | $$$$$$$$ | $$ $$ $$
@@ -49,402 +55,150 @@
 | $$  | $$ | $$  | $$ | $$\  $ | $$ | $$       | $$  | $$
 | $$  | $$ | $$  | $$ | $$ \/  | $$ | $$$$$$$$ | $$$$$$$/
 |__/  |__/ |__/  |__/ |__/     |__/|________/ |________/</pre>
-
-            <div class="hero-info" data-animate="fade-up" data-delay="300">
-              <p class="hero-location">Dhaka, Bangladesh</p>
-              <p class="hero-role">Product Designer &amp; Developer</p>
-              <p class="hero-detail">MedTech &amp; FinTech Focused • CS Background</p>
-            </div>
-          </div>
-
-          <!-- Hero right: Profile with original uncropped dimensions -->
-          <div class="hero-image-pane" data-animate="fade-left" data-delay="250">
-            <img src="assets/profile.png" alt="Rayhan Ahmed" class="hero-profile-img" />
+          <div class="hero-bio">
+            <p class="location">Dhaka, Bangladesh</p>
+            <p class="role">Product Designer &amp; Developer</p>
+            <p class="muted">MedTech &amp; FinTech Focused <span aria-hidden="true">•</span> CS Background</p>
           </div>
         </div>
-
-        <!-- Integrated Hero Stats Bar -->
-        <div class="hero-stats-bar" data-animate="fade-up" data-delay="400">
-          <div class="hero-stat-col">
-            <span class="hero-stat-label">REPOSITORIES</span>
-            <span class="hero-stat-value" data-count="12">0</span>
-          </div>
-          <div class="hero-stat-dot">•</div>
-          <div class="hero-stat-col">
-            <span class="hero-stat-label">STARS</span>
-            <span class="hero-stat-value" data-count="4">0</span>
-          </div>
-          <div class="hero-stat-dot">•</div>
-          <div class="hero-stat-col">
-            <span class="hero-stat-label">CONTRIBUTIONS</span>
-            <span class="hero-stat-value" data-count="12">0</span>
-          </div>
-          <div class="hero-stat-dot">•</div>
-          <div class="hero-stat-col">
-            <span class="hero-stat-label">FOLLOWERS</span>
-            <span class="hero-stat-value" data-count="8">0</span>
-          </div>
-        </div>
+        <figure class="hero-portrait">
+          <img src="assets/ascii-myself.png" alt="ASCII portrait of Rayhan Ahmed">
+          <figcaption>01 / HUMAN BEHIND THE TERMINAL</figcaption>
+        </figure>
+      </div>
+      <div class="profile-stats" aria-label="GitHub profile statistics">
+        <div><strong>12</strong><span>Repositories</span></div>
+        <div><strong>04</strong><span>Stars</span></div>
+        <div><strong>12</strong><span>Contributions</span></div>
+        <div><strong>08</strong><span>Followers</span></div>
       </div>
     </section>
 
-    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
-    <div class="section-divider" data-animate="line-draw">
-      <div class="divider-line"></div>
-    </div>
-
-    <!-- ═══════════════ WHOAMI SECTION ═══════════════ -->
-    <section class="whoami-section" id="whoami">
-      <div class="section-header" data-animate="fade-up">
-        <img src="assets/flash.svg" alt="" class="section-icon" />
-        <h2 class="section-title">Whoami</h2>
+    <section class="content-section" id="repos" aria-labelledby="repos-heading">
+      <div class="section-heading">
+        <p class="eyebrow">01 / ls repos</p>
+        <h2 id="repos-heading">Selected repositories</h2>
+        <p class="muted">Experiments, practice, and things I’ve built.</p>
       </div>
-
-      <!-- Interactive Terminal Window (Image 2 style) -->
-      <div class="terminal-window" data-animate="fade-up" data-delay="100">
-        <!-- Terminal Title Bar -->
-        <div class="terminal-window-header">
-          <div class="terminal-dots">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
+      <article class="featured-repo">
+        <div class="repo-art" aria-label="Project preview">
+          <p class="eyebrow">01 / PROJECT PREVIEW</p>
+          <div class="certificate-art" aria-hidden="true">
+            <span>COMPLETION CERTIFICATE</span>
+            <strong>iplome</strong>
+            <i></i>
+            <small>GENERATIVE DIPLOMA TOOL</small>
           </div>
-          <div class="terminal-window-title">GITHUB / USER PROFILE</div>
-          <div class="terminal-window-meta">
-            <span class="terminal-status-dot"></span>
-            <span class="terminal-status-text">active</span>
-          </div>
+          <span class="repo-art-caption">iplome / Python</span>
         </div>
-
-        <!-- Terminal Window Body (2 columns: interactive shell + help guide) -->
-        <div class="terminal-window-body">
-          <!-- Left Column: Interactive Terminal -->
-          <div class="terminal-shell" id="terminalShell">
-            <div class="terminal-history" id="terminalHistory">
-              <!-- Initial command output -->
-              <div class="terminal-log-entry">
-                <div class="terminal-prompt-line">
-                  <span class="t-user">github@rayhan09niloy</span><span class="t-sep">:</span><span class="t-path">~</span><span class="t-dollar">$</span>
-                  <span class="t-cmd">whoami</span>
-                </div>
-                <div class="terminal-output-block">
-                  <table class="info-table">
-                    <tr><td class="label">Name</td><td class="colon">:</td><td class="value">Rayhan</td></tr>
-                    <tr><td class="label">Role</td><td class="colon">:</td><td class="value">Product</td></tr>
-                    <tr><td class="label">Level</td><td class="colon">:</td><td class="value">Entry</td></tr>
-                    <tr><td class="label">Industry</td><td class="colon">:</td><td class="value">FinTech</td></tr>
-                    <tr><td class="label">Background</td><td class="colon">:</td><td class="value">Computer Science</td></tr>
-                    <tr><td class="label">Experience</td><td class="colon">:</td><td class="value">20 months</td></tr>
-                    <tr><td class="label">Based on</td><td class="colon">:</td><td class="value">Dhaka, Bangladesh</td></tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <!-- Active Input Row -->
-            <form class="terminal-input-row" id="terminalForm" onsubmit="return false;">
-              <span class="t-user">github@rayhan09niloy</span><span class="t-sep">:</span><span class="t-path">~</span><span class="t-dollar">$</span>
-              <input type="text" id="terminalInput" class="terminal-input" placeholder="type a command..." autocomplete="off" spellcheck="false" />
-              <span class="terminal-cursor">█</span>
-            </form>
-          </div>
-
-          <!-- Right Column: --help Command Guide -->
-          <div class="terminal-help-pane">
-            <div class="help-pane-header">
-              <span class="help-flag">--help</span>
-              <span class="help-label">COMMAND GUIDE</span>
-            </div>
-            <p class="help-intro">Click any command to run it in the terminal, or type directly:</p>
-            
-            <div class="help-cmd-list">
-              <button class="help-cmd-item" type="button" data-cmd="whoami">
-                <span class="help-cmd-badge">whoami</span>
-                <span class="help-cmd-desc">Print profile &amp; bio</span>
-              </button>
-              <button class="help-cmd-item" type="button" data-cmd="skills">
-                <span class="help-cmd-badge">skills</span>
-                <span class="help-cmd-desc">List technical stack &amp; %</span>
-              </button>
-              <button class="help-cmd-item" type="button" data-cmd="repos">
-                <span class="help-cmd-badge">repos</span>
-                <span class="help-cmd-desc">List highlighted projects</span>
-              </button>
-              <button class="help-cmd-item" type="button" data-cmd="contact">
-                <span class="help-cmd-badge">contact</span>
-                <span class="help-cmd-desc">Get contact &amp; social links</span>
-              </button>
-              <button class="help-cmd-item" type="button" data-cmd="clear">
-                <span class="help-cmd-badge">clear</span>
-                <span class="help-cmd-desc">Reset terminal screen</span>
-              </button>
-            </div>
-
-            <div class="help-pane-footer">
-              <div class="help-shortcuts">
-                <span class="key-hint">↵ Enter to run</span>
-                <span class="key-hint">↑ / ↓ history</span>
-              </div>
-            </div>
-          </div>
+        <div class="repo-copy">
+          <p class="eyebrow">FEATURED REPOSITORY</p>
+          <h3>iplome-using-python</h3>
+          <p>Diploma is a generative attribute based art creation tool. Designed for simplicity, it can generate unique certificate and diploma designs from input data.</p>
+          <p class="repo-meta">Python <span>·</span> 0 stars</p>
+          <a class="text-link" href="https://github.com/rayhan09niloy/iplome-using-python" target="_blank" rel="noopener noreferrer">View repository ↗</a>
         </div>
+      </article>
+      <div class="repo-grid">
+        <article class="repo-card">
+          <p class="eyebrow">REPOSITORY</p>
+          <h3>ibm-data-science-tools-lab</h3>
+          <p>Jupyter Notebook practice lab summarizing data science languages, libraries, and tools for the IBM Data Science Course 2.</p>
+          <p class="repo-meta">Jupyter NB <span>·</span> 2 stars</p>
+          <a class="text-link" href="https://github.com/rayhan09niloy/ibm-data-science-tools-lab" target="_blank" rel="noopener noreferrer">View repository ↗</a>
+        </article>
+        <article class="repo-card">
+          <p class="eyebrow">REPOSITORY</p>
+          <h3>questiongg-discord-bot</h3>
+          <p>A competitive Discord trivia bot with timed questions, answer verification, and a real-time player leaderboard.</p>
+          <p class="repo-meta">Python <span>·</span> 0 stars</p>
+          <a class="text-link" href="https://github.com/rayhan09niloy/questiongg-discord-bot" target="_blank" rel="noopener noreferrer">View repository ↗</a>
+        </article>
       </div>
     </section>
 
-    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
-    <div class="section-divider" data-animate="line-draw">
-      <div class="divider-line"></div>
-    </div>
-
-    <!-- ═══════════════ SELECTED WORK ═══════════════ -->
-    <section class="selected-work" id="repos">
-      <div class="section-header" data-animate="fade-up">
-        <img src="assets/flash.svg" alt="" class="section-icon" />
-        <h2 class="section-title">ls ./selected_repo</h2>
+    <section class="toolbox-section" id="toolbox" aria-labelledby="toolbox-heading">
+      <div class="toolbox-copy">
+        <p class="eyebrow">02 / toolbox</p>
+        <h2 id="toolbox-heading">A stack with<br>a little gravity.</h2>
+        <p class="muted">A mix of web, systems, and app-development tools behind the work.</p>
+        <p class="drop-hint">SCROLL TO DROP / CONTAINER-LOCAL</p>
       </div>
-
-      <!-- Featured Repo -->
-      <div class="repo-featured" data-animate="fade-up" data-delay="100">
-        <div class="repo-placeholder">
-          <div class="repo-placeholder-inner">
-            <div class="code-rain" id="codeRain"></div>
-          </div>
+      <div class="tool-stage" aria-label="A collection of tools settling into place">
+        <span class="stage-label">↓ spawn boundary</span>
+        <div class="tool-tokens">
+          <div class="tool-token" role="img" aria-label="Python"><img src="assets/Icons/Python.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="JavaScript"><img src="assets/Icons/JavaScript.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="HTML"><img src="assets/Icons/HTML.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="CSS"><img src="assets/Icons/CSS.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Windows"><img src="assets/Icons/Windows.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Linux"><img src="assets/Icons/Linux.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Rust"><img src="assets/Icons/Rust.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Angular"><img src="assets/Icons/Angular.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Swift"><img src="assets/Icons/Swift.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Sass"><img src="assets/Icons/Sass.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Tailwind CSS"><img src="assets/Icons/Tailwind-CSS.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Bootstrap"><img src="assets/Icons/Bootstrap.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Java"><img src="assets/Icons/Java.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="TypeScript"><img src="assets/Icons/TypeScript.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Go"><img src="assets/Icons/Go.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Ruby"><img src="assets/Icons/Ruby.svg" alt=""></div>
+          <div class="tool-token" role="img" aria-label="Flutter"><img src="assets/Icons/Flutter.svg" alt=""></div>
         </div>
-        <div class="repo-info-panel">
-          <a href="#" class="repo-name-link">DataScienceEcosystem</a>
-          <p class="repo-desc">A hands-on lab practice for IBM Data Science Course Summarising  DS/AI Tools.</p>
-          <div class="repo-meta">
-            <span class="repo-lang">Python</span>
-            <span class="repo-stars">
-              <img src="assets/star.svg" alt="" class="star-icon" />
-              0
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="repo-featured right" data-animate="fade-up" data-delay="200">
-        <div class="repo-info-panel">
-          <a href="#" class="repo-name-link">iplome-using-python</a>
-          <p class="repo-desc">Diploma is a generative attribute based art creation tool. Designed for simplicity, Can generate unique certificate/diploma type designs from inputted data.</p>
-          <div class="repo-meta">
-            <span class="repo-lang">Python</span>
-            <span class="repo-stars">
-              <img src="assets/star.svg" alt="" class="star-icon" />
-              0
-            </span>
-          </div>
-        </div>
-        <div class="repo-placeholder">
-          <div class="repo-placeholder-inner">
-            <div class="matrix-text" id="matrixText"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Smaller Repos Grid -->
-      <div class="repo-grid" data-animate="fade-up" data-delay="300">
-        <div class="repo-card" data-tilt>
-          <a href="#" class="repo-name-link">AutomateQG</a>
-          <p class="repo-desc">A collection of automated question generation scripts.</p>
-          <div class="repo-meta">
-            <span class="repo-lang">Python</span>
-            <span class="repo-stars">
-              <img src="assets/star.svg" alt="" class="star-icon" />
-              0
-            </span>
-          </div>
-        </div>
-        <div class="repo-card" data-tilt>
-          <a href="#" class="repo-name-link">QuestionGG</a>
-          <p class="repo-desc">A competitive Discord trivia bot that serves timed questions.</p>
-          <div class="repo-meta">
-            <span class="repo-lang">Python</span>
-            <span class="repo-stars">
-              <img src="assets/star.svg" alt="" class="star-icon" />
-              0
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Second Row -->
-      <div class="repo-grid three-col" data-animate="fade-up" data-delay="400">
-        <div class="repo-card" data-tilt>
-          <a href="#" class="repo-name-link">ibm-data-science-tools-lab</a>
-          <p class="repo-desc">Jupyter Notebook practice lab summarizing data science languages, libraries, and tools for the IBM Data Science Course 2.</p>
-          <div class="repo-meta">
-            <span class="repo-lang">Jupyter NB</span>
-            <span class="repo-stars">
-              <img src="assets/star.svg" alt="" class="star-icon" />
-              2
-            </span>
-          </div>
-        </div>
-        <div class="repo-card" data-tilt>
-          <a href="#" class="repo-name-link">questiongg-discord-bot</a>
-          <p class="repo-desc">A competitive Discord trivia bot that serves timed questions from a local JSON data bank, auto-verifies answers, and maintains a real-time player leaderboard.</p>
-          <div class="repo-meta">
-            <span class="repo-lang">Python</span>
-            <span class="repo-stars">
-              <img src="assets/star.svg" alt="" class="star-icon" />
-              0
-            </span>
-          </div>
-        </div>
-        <div class="repo-card" data-tilt>
-          <a href="#" class="repo-name-link">questiongg-discord-bot</a>
-          <p class="repo-desc">A competitive Discord trivia bot that serves timed questions from a local JSON data bank, auto-verifies answers, and maintains a real-time player leaderboard.</p>
-          <div class="repo-meta">
-            <span class="repo-lang">Python</span>
-            <span class="repo-stars">
-              <img src="assets/star.svg" alt="" class="star-icon" />
-              0
-            </span>
-          </div>
-        </div>
+        <div class="stage-floor"></div>
       </div>
     </section>
 
-    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
-    <div class="section-divider" data-animate="line-draw">
-      <div class="divider-line"></div>
+    <div class="activity-contact-layout">
+      <section class="content-section activity-section" id="activity" aria-labelledby="activity-heading">
+        <div class="section-heading">
+          <p class="eyebrow">03 / contribution_activity</p>
+          <h2 id="activity-heading">Small commits. Visible progress.</h2>
+        </div>
+        <div class="activity-card">
+          <div class="activity-summary">
+            <div><strong>12</strong><span>contributions this year</span></div>
+            <div class="activity-legend" aria-label="Contribution levels">
+              <span><i class="level-0"></i>None</span>
+              <span><i class="level-1"></i>L1</span>
+              <span><i class="level-2"></i>L2</span>
+              <span><i class="level-3"></i>L3</span>
+            </div>
+          </div>
+          <div class="activity-grid" id="activityGrid" aria-label="Contribution activity over the last 15 weeks"></div>
+          <a class="text-link" href="https://github.com/rayhan09niloy" target="_blank" rel="noopener noreferrer">View GitHub activity ↗</a>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+        <div class="contact-heading">
+          <p class="eyebrow">04 / connect</p>
+          <h2 id="contact-heading">Let’s build something<br>worth opening.</h2>
+        </div>
+        <div class="contact-card">
+          <div class="contact-profile">
+            <img src="assets/profile.png" alt="profile picture of Rayhan Ahmed" class="profile-image">
+            <div>
+              <h3>Rayhan Ahmed</h3>
+              <p>Product Designer | FinTech &amp; MedTech Enthusiast</p>
+              <a class="text-link" href="https://github.com/rayhan09niloy" target="_blank" rel="noopener noreferrer">View GitHub profile ↗</a>
+            </div>
+          </div>
+          <div class="contact-links">
+            <a href="mailto:hellorayhan09niloy@gmail.com">hellorayhan09niloy@gmail.com ↗</a>
+            <a href="https://linkedin.com/in/rayhan09niloy" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a href="https://x.com/rayhan09niloy" target="_blank" rel="noopener noreferrer">X (Twitter) ↗</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+            <a href="https://behance.net" target="_blank" rel="noopener noreferrer">Behance ↗</a>
+          </div>
+        </div>
+      </section>
     </div>
 
-    <!-- ═══════════════ TOOLBOX ═══════════════ -->
-    <section class="toolbox-section" id="toolbox">
-      <div class="section-header" data-animate="fade-up">
-        <img src="assets/flash.svg" alt="" class="section-icon" />
-        <h2 class="section-title">ls toolbox</h2>
-      </div>
-
-      <div class="toolbox-card" data-animate="fade-up" data-delay="100">
-        <div class="skill-bar" data-animate="bar-fill" data-delay="200">
-          <div class="skill-info">
-            <span class="skill-dot" style="background: #e34c26;"></span>
-            <span class="skill-name">HTML</span>
-            <span class="skill-percent">78%</span>
-          </div>
-          <div class="bar-track">
-            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #e34c26;"></div>
-          </div>
-        </div>
-        <div class="skill-bar" data-animate="bar-fill" data-delay="300">
-          <div class="skill-info">
-            <span class="skill-dot" style="background: #264de4;"></span>
-            <span class="skill-name">CSS</span>
-            <span class="skill-percent">78%</span>
-          </div>
-          <div class="bar-track">
-            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #264de4;"></div>
-          </div>
-        </div>
-        <div class="skill-bar" data-animate="bar-fill" data-delay="400">
-          <div class="skill-info">
-            <span class="skill-dot" style="background: #f7df1e;"></span>
-            <span class="skill-name">JavaScript</span>
-            <span class="skill-percent">78%</span>
-          </div>
-          <div class="bar-track">
-            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #f7df1e;"></div>
-          </div>
-        </div>
-        <div class="skill-bar" data-animate="bar-fill" data-delay="500">
-          <div class="skill-info">
-            <span class="skill-dot" style="background: #3776ab;"></span>
-            <span class="skill-name">Python</span>
-            <span class="skill-percent">78%</span>
-          </div>
-          <div class="bar-track">
-            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #3776ab;"></div>
-          </div>
-        </div>
-        <div class="skill-bar" data-animate="bar-fill" data-delay="600">
-          <div class="skill-info">
-            <span class="skill-dot" style="background: #61dafb;"></span>
-            <span class="skill-name">React</span>
-            <span class="skill-percent">78%</span>
-          </div>
-          <div class="bar-track">
-            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #61dafb;"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
-    <div class="section-divider" data-animate="line-draw">
-      <div class="divider-line"></div>
-    </div>
-
-    <!-- ═══════════════ CONTRIBUTION ACTIVITY ═══════════════ -->
-    <section class="contribution-section" id="contributions">
-      <div class="section-header" data-animate="fade-up">
-        <img src="assets/flash.svg" alt="" class="section-icon" />
-        <h2 class="section-title">ls contribution_activity</h2>
-      </div>
-
-      <div class="contribution-card" data-animate="fade-up" data-delay="100">
-        <div class="contribution-header">
-          <span class="contribution-count">12 Contributions in this year</span>
-          <div class="contribution-legend">
-            <span class="legend-text">Less</span>
-            <span class="legend-box" style="background: #3c474e;"></span>
-            <span class="legend-box" style="background: #3e718f;"></span>
-            <span class="legend-box" style="background: #4d9ccb;"></span>
-            <span class="legend-box" style="background: #1095e4;"></span>
-            <span class="legend-text">More</span>
-          </div>
-        </div>
-        <div class="contribution-grid" id="contributionGrid">
-          <!-- Generated by JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
-    <div class="section-divider" data-animate="line-draw">
-      <div class="divider-line"></div>
-    </div>
-
-    <!-- ═══════════════ FOOTER / CONTACT ═══════════════ -->
-    <footer class="footer-section" id="contact">
-      <div class="footer-content" data-animate="fade-up">
-        <div class="email-row">
-          <div class="email-display">
-            <span>hellorayhan09niloy@gmail.com</span>
-          </div>
-          <button class="copy-btn" id="copyEmail" aria-label="Copy email">
-            <img src="assets/copy.svg" alt="Copy" />
-          </button>
-        </div>
-        <div class="social-links">
-          <a href="https://linkedin.com/in/rayhan09niloy" target="_blank" rel="noopener noreferrer" class="social-pill">LinkedIn</a>
-          <a href="https://x.com/rayhan09niloy" target="_blank" rel="noopener noreferrer" class="social-pill">X (Twitter)</a>
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-pill">Facebook</a>
-          <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="social-pill">Behance</a>
-        </div>
-      </div>
-
-      <div class="footer-profile" data-animate="fade-up" data-delay="200">
-        <div class="footer-profile-card">
-          <img src="assets/profile.png" alt="Rayhan Ahmed" class="footer-avatar" />
-          <div class="footer-profile-info">
-            <span class="footer-badge">@rayhan09niloy</span>
-            <h3 class="footer-name">Rayhan Ahmed</h3>
-            <p class="footer-bio">Product Designer | FinTech & MedTech Enthusiast</p>
-          </div>
-          <div class="footer-level">4</div>
-        </div>
-      </div>
+    <footer class="site-footer">
+      <span>Portfolio / Terminal · Same person, different interface.</span>
+      <span>© Rayhan Ahmed · Built with curiosity.</span>
     </footer>
-
   </main>
-
-  <!-- Toast notification -->
-  <div class="toast" id="toast">Email copied to clipboard!</div>
-
-  <script src="script.js"></script>
 </body>
 </html>
-

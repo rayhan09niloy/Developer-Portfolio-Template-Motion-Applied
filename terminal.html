@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070c14">
+  <title>Terminal — Rayhan Ahmed</title>
+   <meta name="description" content="Rayhan Ahmed's portfolio website showcasing selected repositories, contribution activity, and contact information.">
+  <meta name="keywords" content="Rayhan Ahmed, Portfolio, Product Designer, Developer, MedTech, FinTech, GitHub, Repositories, Contributions">
+  <meta name="author" content="Rayhan Ahmed">
+  <meta property="og:title" content="Rayhan Ahmed — Portfolio">
+  <meta property="og:description" content="Rayhan Ahmed's portfolio website showcasing selected repositories, contribution activity, and contact information.">
+  <meta property="og:image" content="assets/profile.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="page-grid" aria-hidden="true"></div>
+  <main class="site-shell terminal-page">
+    <header class="site-nav">
+      <a class="wordmark" href="index.html">@rayhan09niloy</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="index.html#portfolio">PORTFOLIO</a>
+        <a href="index.html#repos">REPOS</a>
+        <a href="index.html#activity">ACTIVITY</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="button button-primary" href="index.html"><span aria-hidden="true">›_</span> Terminal on</a>
+        <a class="button button-muted github-link" href="https://github.com/rayhan09niloy" target="_blank" rel="noopener noreferrer">View GitHub ↗</a>
+      </div>
+    </header>
+
+    <section class="terminal-window" aria-label="Interactive profile terminal">
+      <header class="terminal-titlebar">
+        <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <p>SAME PERSON. DIFFERENT INTERFACE.</p>
+        <span class="terminal-status"><i></i> active</span>
+      </header>
+      <div class="terminal-layout">
+        <div class="terminal-console">
+          <div class="terminal-history" id="terminalHistory">
+            <div class="terminal-entries" id="terminalEntries" aria-live="polite" aria-relevant="additions text">
+              <article class="terminal-entry">
+                <div class="terminal-command-line">
+                  <span class="terminal-prompt"><span class="terminal-host">github@rayhan09niloy</span><span class="terminal-separator">:</span><span class="terminal-path">~</span><span class="terminal-dollar">$</span></span>
+                  <span class="terminal-command">whoami</span>
+                </div>
+                <div class="terminal-data">
+                  <div class="terminal-data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span>Rayhan Ahmed</span></div>
+                  <div class="terminal-data-row"><span class="data-label">Role</span><span class="data-colon">:</span><span>Product Designer</span></div>
+                  <div class="terminal-data-row"><span class="data-label">Level</span><span class="data-colon">:</span><span>Entry-level/Junior</span></div>
+                  <div class="terminal-data-row"><span class="data-label">Education</span><span class="data-colon">:</span><span>Diploma in-Engineering (Major: Computer Science)</span></div>
+                  <div class="terminal-data-row"><span class="data-label">Based on</span><span class="data-colon">:</span><span>Dhaka, Bangladesh</span></div>
+                </div>
+              </article>
+            </div>
+            <form class="terminal-input-row" id="terminalForm" autocomplete="off">
+              <label class="terminal-prompt" for="terminalInput"><span class="terminal-host">github@rayhan09niloy</span><span class="terminal-separator">:</span><span class="terminal-path">~</span><span class="terminal-dollar">$</span></label>
+              <input id="terminalInput" name="command" type="text" class="terminal-input" aria-label="Terminal command" placeholder="type --help for commands" autocomplete="off" spellcheck="false" autofocus>
+            </form>
+          </div>
+        </div>
+        <aside class="command-panel">
+          <h1>--help</h1>
+          <p>Type a command below, or select one to run it.</p>
+          <div class="command-list">
+            <button type="button" class="command-button" data-command="whoami"><code>whoami</code><span>Profile &amp; background</span></button>
+            <button type="button" class="command-button" data-command="skills"><code>skills</code><span>Tools I work with</span></button>
+            <button type="button" class="command-button" data-command="repos"><code>repos</code><span>Selected repositories</span></button>
+            <button type="button" class="command-button" data-command="contact"><code>contact</code><span>Contact &amp; social links</span></button>
+            <button type="button" class="command-button" data-command="clear"><code>clear</code><span>Clear the output</span></button>
+          </div>
+          <p class="command-note">Commands support Enter, ↑ / ↓ history, and Tab completion.</p>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <span>Portfolio / Terminal · Same person, different interface.</span>
+      <span>© Rayhan Ahmed · Built with curiosity.</span>
+    </footer>
+  </main>
+</body>
+</html>

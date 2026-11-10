@@ -1,506 +1,502 @@
-/* ═══════════════════════════════════════════════════════════
-   RAYHAN AHMED — Portfolio Script
-   Interactive animations, scroll reveals, contribution grid,
-   typing effects, code rain, and more.
-   ═══════════════════════════════════════════════════════════ */
-
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Cursor glow follow ──────────────────────────────────
-  const cursorGlow = document.getElementById('cursorGlow');
-  let mouseX = 0, mouseY = 0;
-  let glowX = 0, glowY = 0;
+  const activityGrid = document.getElementById('activityGrid');
 
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
+  if (activityGrid) {
+    const activeDays = new Map([
+      [5, [1, 2, 4, 5]],
+      [9, [3]],
+      [15, [1, 2, 3, 4, 5]],
+      [20, [2]],
+      [25, [5]],
+      [26, [5]],
+      [27, [4, 5]],
+      [28, [0, 5]],
+      [29, [1, 2, 4]]
+    ]);
 
-  function animateGlow() {
-    glowX += (mouseX - glowX) * 0.08;
-    glowY += (mouseY - glowY) * 0.08;
-    cursorGlow.style.left = glowX + 'px';
-    cursorGlow.style.top = glowY + 'px';
-    requestAnimationFrame(animateGlow);
+    for (let week = 15; week < 30; week += 1) {
+      const column = document.createElement('div');
+      column.className = 'activity-column';
+      column.setAttribute('role', 'group');
+      column.setAttribute('aria-label', `Week ${week + 1}`);
+
+      for (let day = 0; day < 7; day += 1) {
+        const cell = document.createElement('span');
+        const level = activeDays.get(week)?.includes(day)
+          ? (week > 27 ? 3 : week > 25 ? 2 : 1)
+          : 0;
+        cell.className = `activity-cell level-${level}`;
+        cell.setAttribute('aria-hidden', 'true');
+        column.appendChild(cell);
+      }
+
+      activityGrid.appendChild(column);
+    }
   }
-  animateGlow();
 
-  // ── Typing effect for greeting ──────────────────────────
-  const greeting = document.querySelector('.hero-greeting');
-  const greetingText = "HELLO, WORLD. I'M ";
-  greeting.textContent = '';
-  greeting.classList.add('typed');
-  let charIndex = 0;
+  const toolStage = document.querySelector('.tool-stage');
+  if (toolStage) {
+    const toolLayer = toolStage.querySelector('.tool-tokens');
+    const tokens = [...toolStage.querySelectorAll('.tool-token')];
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let animationFrame = 0;
+    let resizeTimeout = 0;
+    let hasStarted = false;
 
-  function typeGreeting() {
-    if (charIndex < greetingText.length) {
-      greeting.textContent += greetingText[charIndex];
-      charIndex++;
-      setTimeout(typeGreeting, 80 + Math.random() * 40);
+    const showToolsWithoutMotion = () => {
+      const gap = 10;
+      const width = toolLayer.clientWidth;
+      const height = toolLayer.clientHeight;
+      const tokenWidth = tokens[0].offsetWidth;
+      const columns = Math.max(1, Math.floor((width + gap) / (tokenWidth + gap)));
+      const rows = Math.ceil(tokens.length / columns);
+      const startX = Math.max(0, (width - columns * tokenWidth - (columns - 1) * gap) / 2);
+      const startY = Math.max(0, height - rows * (tokenWidth + gap));
+
+      tokens.forEach((token, index) => {
+        const row = Math.floor(index / columns);
+        const column = index % columns;
+        token.style.opacity = '1';
+        token.style.transform = `translate(${startX + column * (tokenWidth + gap)}px, ${startY + row * (tokenWidth + gap)}px)`;
+      });
+    };
+
+    const dropTools = () => {
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      if (reducedMotion.matches) {
+        showToolsWithoutMotion();
+        return;
+      }
+
+      const width = toolLayer.clientWidth;
+      const height = toolLayer.clientHeight;
+      const floor = height - 24;
+      const gravity = 1800;
+      const maximumTilt = 12 * Math.PI / 180;
+      const step = 1 / 60;
+      let accumulator = 0;
+      let previousTime = 0;
+      let elapsed = 0;
+      let settledTime = 0;
+      const bodies = tokens.map((element) => {
+        const size = element.offsetWidth;
+        const body = {
+          element,
+          size,
+          x: Math.random() * Math.max(0, width - size),
+          y: -size - Math.random() * 260,
+          vx: (Math.random() - 0.5) * 90,
+          vy: Math.random() * 45,
+          angle: (Math.random() - 0.5) * 0.45,
+          angularVelocity: (Math.random() - 0.5) * 2.8
+        };
+        element.style.opacity = '1';
+        return body;
+      });
+
+      const halfExtent = (body) => {
+        const halfSize = body.size / 2;
+        return halfSize * (Math.abs(Math.cos(body.angle)) + Math.abs(Math.sin(body.angle)));
+      };
+
+      const stepPhysics = () => {
+        bodies.forEach((body) => {
+          body.vy += gravity * step;
+          body.x += body.vx * step;
+          body.y += body.vy * step;
+          body.angle += body.angularVelocity * step;
+          if (Math.abs(body.angle) > maximumTilt) {
+            body.angle = Math.sign(body.angle) * maximumTilt;
+            body.angularVelocity = -body.angularVelocity * 0.18;
+          }
+
+          const extent = halfExtent(body);
+          if (body.x + body.size / 2 - extent < 0) {
+            body.x = extent - body.size / 2;
+            body.vx = Math.abs(body.vx) * 0.35;
+            body.angularVelocity += body.vy * 0.002;
+          } else if (body.x + body.size / 2 + extent > width) {
+            body.x = width - extent - body.size / 2;
+            body.vx = -Math.abs(body.vx) * 0.35;
+            body.angularVelocity -= body.vy * 0.002;
+          }
+        });
+
+        for (let pass = 0; pass < 4; pass += 1) {
+          for (let firstIndex = 0; firstIndex < bodies.length; firstIndex += 1) {
+            const first = bodies[firstIndex];
+            for (let secondIndex = firstIndex + 1; secondIndex < bodies.length; secondIndex += 1) {
+              const second = bodies[secondIndex];
+              const differenceX = second.x + second.size / 2 - (first.x + first.size / 2);
+              const differenceY = second.y + second.size / 2 - (first.y + first.size / 2);
+              const overlapX = halfExtent(first) + halfExtent(second) - Math.abs(differenceX);
+              const overlapY = halfExtent(first) + halfExtent(second) - Math.abs(differenceY);
+              if (overlapX <= 0 || overlapY <= 0) continue;
+
+              const normalX = overlapX < overlapY
+                ? (differenceX < 0 ? -1 : 1)
+                : 0;
+              const normalY = normalX === 0
+                ? (differenceY < 0 ? -1 : 1)
+                : 0;
+              const overlap = normalX ? overlapX : overlapY;
+              first.x -= normalX * overlap / 2;
+              first.y -= normalY * overlap / 2;
+              second.x += normalX * overlap / 2;
+              second.y += normalY * overlap / 2;
+
+              const relativeNormalVelocity = (second.vx - first.vx) * normalX
+                + (second.vy - first.vy) * normalY;
+              if (relativeNormalVelocity < 0) {
+                const impulse = -(1 + 0.2) * relativeNormalVelocity / 2;
+                first.vx -= impulse * normalX;
+                first.vy -= impulse * normalY;
+                second.vx += impulse * normalX;
+                second.vy += impulse * normalY;
+
+                if (normalX) {
+                  const friction = (second.vy - first.vy) * 0.08;
+                  first.vy += friction;
+                  second.vy -= friction;
+                } else {
+                  const friction = (second.vx - first.vx) * 0.08;
+                  first.vx += friction;
+                  second.vx -= friction;
+                }
+                first.angularVelocity -= relativeNormalVelocity * 0.012;
+                second.angularVelocity += relativeNormalVelocity * 0.012;
+              }
+            }
+          }
+        }
+
+        let maximumSpeed = 0;
+        bodies.forEach((body) => {
+          const extent = halfExtent(body);
+          if (body.x + body.size / 2 - extent < 0) {
+            body.x = extent - body.size / 2;
+            body.vx = Math.abs(body.vx) * 0.35;
+          } else if (body.x + body.size / 2 + extent > width) {
+            body.x = width - extent - body.size / 2;
+            body.vx = -Math.abs(body.vx) * 0.35;
+          }
+          if (body.y + body.size / 2 + extent > floor) {
+            body.y = floor - body.size / 2 - extent;
+            if (body.vy > 0) {
+              body.vy = body.vy < 55 ? 0 : -body.vy * 0.18;
+              body.angularVelocity += body.vx * 0.002;
+            }
+            body.vx *= 0.82;
+            body.angularVelocity *= 0.82;
+          }
+
+          maximumSpeed = Math.max(maximumSpeed, Math.abs(body.vx), Math.abs(body.vy));
+          body.element.style.transform = `translate(${body.x}px, ${body.y}px) rotate(${body.angle}rad)`;
+        });
+        return maximumSpeed;
+      };
+
+      const animate = (time) => {
+        if (!previousTime) previousTime = time;
+        const delta = Math.min((time - previousTime) / 1000, 0.05);
+        accumulator += delta;
+        previousTime = time;
+        elapsed += delta;
+
+        while (accumulator >= step) {
+          const maximumSpeed = stepPhysics();
+          accumulator -= step;
+          settledTime = maximumSpeed < 12 ? settledTime + step : 0;
+        }
+
+        if (settledTime >= 0.8 || elapsed >= 8) {
+          animationFrame = 0;
+          return;
+        }
+        animationFrame = window.requestAnimationFrame(animate);
+      };
+
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
+    const revealTools = () => {
+      if (hasStarted) return;
+      hasStarted = true;
+      dropTools();
+    };
+
+    reducedMotion.addEventListener('change', () => {
+      if (hasStarted) dropTools();
+    });
+    window.addEventListener('resize', () => {
+      if (!hasStarted) return;
+      window.clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(dropTools, 120);
+    });
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, currentObserver) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          revealTools();
+          currentObserver.disconnect();
+        }
+      }, { threshold: 0.25 });
+      observer.observe(toolStage);
     } else {
-      // Add blinking cursor
-      greeting.innerHTML += '<span class="blink-cursor">▌</span>';
-      // Add cursor blink style
-      const style = document.createElement('style');
-      style.textContent = `
-        .blink-cursor {
-          animation: blink 1s step-end infinite;
-          color: #1095e4;
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-  }
-  setTimeout(typeGreeting, 600);
-
-  // ── Scroll-based reveal (IntersectionObserver) ─────────
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const delay = parseInt(entry.target.dataset.delay) || 0;
-          setTimeout(() => {
-            entry.target.classList.add('in-view');
-          }, delay);
-        }
-      });
-    },
-    { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
-  );
-
-  document.querySelectorAll('[data-animate]').forEach((el) => {
-    revealObserver.observe(el);
-  });
-
-  // ── Skill bars animation ────────────────────────────────
-  const barObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const delay = parseInt(entry.target.dataset.delay) || 0;
-          setTimeout(() => {
-            entry.target.classList.add('in-view');
-          }, delay);
-        }
-      });
-    },
-    { threshold: 0.3 }
-  );
-
-  document.querySelectorAll('.skill-bar').forEach((bar) => {
-    barObserver.observe(bar);
-  });
-
-  // ── Counting animation for stats ───────────────────────
-  const countObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = parseInt(el.dataset.count);
-          animateCount(el, 0, target, 1200);
-          countObserver.unobserve(el);
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
-
-  document.querySelectorAll('[data-count]').forEach((el) => {
-    countObserver.observe(el);
-  });
-
-  function animateCount(el, start, end, duration) {
-    const startTime = performance.now();
-    function update(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
-      const ease = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(start + (end - start) * ease);
-      el.textContent = String(current).padStart(2, '0');
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
-    }
-    requestAnimationFrame(update);
-  }
-
-  // ── Contribution grid generation ────────────────────────
-  const grid = document.getElementById('contributionGrid');
-  const weeks = 30;
-  const daysPerWeek = 7;
-
-  // Specific activity pattern (sparse, with a few highlights)
-  const activeWeeks = {
-    26: [6],       // level-1
-    27: [5, 6],    // level-2, level-3
-    28: [0],       // level-3
-  };
-
-  for (let w = 0; w < weeks; w++) {
-    const col = document.createElement('div');
-    col.className = 'contribution-column';
-
-    const daysInThisWeek = (w === weeks - 1) ? 4 : daysPerWeek;
-
-    for (let d = 0; d < daysInThisWeek; d++) {
-      const cell = document.createElement('div');
-      cell.className = 'contribution-cell';
-
-      // Check if this cell should be colored
-      if (activeWeeks[w]) {
-        if (activeWeeks[w].includes(d)) {
-          if (w === 28) cell.classList.add('level-3');
-          else if (w === 27 && d === 6) cell.classList.add('level-3');
-          else if (w === 27 && d === 5) cell.classList.add('level-2');
-          else cell.classList.add('level-1');
-        }
-      }
-
-      col.appendChild(cell);
-    }
-    grid.appendChild(col);
-  }
-
-  // Animate contribution cells on scroll
-  const contribObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const cells = entry.target.querySelectorAll('.contribution-cell');
-          cells.forEach((cell, i) => {
-            setTimeout(() => {
-              cell.classList.add('in-view');
-            }, i * 8);
-          });
-          contribObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
-  contribObserver.observe(grid);
-
-  // ── Code rain effect ────────────────────────────────────
-  const codeRain = document.getElementById('codeRain');
-  if (codeRain) {
-    const chars = '01{}[]()=><;:+-*/%!&|~^?#@$_abcdefghijklmnopqrstuvwxyz';
-    for (let i = 0; i < 15; i++) {
-      const col = document.createElement('div');
-      col.className = 'rain-column';
-      col.style.left = (i * 7) + '%';
-      col.style.animationDuration = (3 + Math.random() * 4) + 's';
-      col.style.animationDelay = (Math.random() * 3) + 's';
-
-      let text = '';
-      for (let j = 0; j < 20; j++) {
-        text += chars[Math.floor(Math.random() * chars.length)] + '\n';
-      }
-      col.textContent = text;
-      codeRain.appendChild(col);
+      revealTools();
     }
   }
 
-  // ── Matrix text effect ──────────────────────────────────
-  const matrixText = document.getElementById('matrixText');
-  if (matrixText) {
-    const snippet = `def generate_diploma(name, course):\n    canvas = create_canvas(800, 600)\n    canvas.set_bg('#0d1117')\n    canvas.draw_border(style='ornate')\n    canvas.add_text(name, font='serif', size=36)\n    canvas.add_text(course, y=300)\n    return canvas.export('png')`;
-    matrixText.textContent = snippet.repeat(4);
-  }
-
-  // ── Copy email functionality ────────────────────────────
-  const copyBtn = document.getElementById('copyEmail');
-  const toast = document.getElementById('toast');
-
-  if (copyBtn) {
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText('hellorayhan09niloy@gmail.com').then(() => {
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2500);
-      }).catch(() => {
-        // Fallback
-        const textarea = document.createElement('textarea');
-        textarea.value = 'hellorayhan09niloy@gmail.com';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2500);
-      });
-    });
-  }
-
-  // ── Tilt effect on repo cards ───────────────────────────
-  document.querySelectorAll('[data-tilt]').forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -3;
-      const rotateY = ((x - centerX) / centerX) * 3;
-      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
-    });
-  });
-
-  // ── Smooth parallax on scroll ───────────────────────────
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        const heroImg = document.querySelector('.hero-image img');
-        if (heroImg) {
-          const parallax = scrollY * 0.1;
-          heroImg.style.transform = `translateY(${parallax}px)`;
-        }
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
-
-  // ── Section divider line draw on scroll ─────────────────
-  const dividerObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        }
-      });
-    },
-    { threshold: 0.5 }
-  );
-
-  document.querySelectorAll('.section-divider').forEach((div) => {
-    dividerObserver.observe(div);
-  });
-
-  // ═══════════════════════════════════════════════════════════
-  // ── INTERACTIVE TERMINAL ENGINE ────────────────────────────
-  // ═══════════════════════════════════════════════════════════
-  const terminalShell = document.getElementById('terminalShell');
   const terminalHistory = document.getElementById('terminalHistory');
-  const terminalInput = document.getElementById('terminalInput');
+  const terminalEntries = document.getElementById('terminalEntries');
   const terminalForm = document.getElementById('terminalForm');
-  const helpCmdButtons = document.querySelectorAll('.help-cmd-item');
-
-  const commandHistory = [];
-  let historyIndex = -1;
-
-  // Focus terminal input when clicking inside the shell
-  if (terminalShell && terminalInput) {
-    terminalShell.addEventListener('click', (e) => {
-      // Don't steal focus if clicking an existing link
-      if (e.target.tagName !== 'A') {
-        terminalInput.focus();
-      }
-    });
-  }
-
-  // Command responses definition
-  const COMMANDS = {
-    whoami: () => `
-      <table class="info-table">
-        <tr><td class="label">Name</td><td class="colon">:</td><td class="value">Rayhan Ahmed</td></tr>
-        <tr><td class="label">Role</td><td class="colon">:</td><td class="value">Product Designer</td></tr>
-        <tr><td class="label">Level</td><td class="colon">:</td><td class="value">Entry</td></tr>
-        <tr><td class="label">Industry</td><td class="colon">:</td><td class="value">FinTech &amp; MedTech</td></tr>
-        <tr><td class="label">Background</td><td class="colon">:</td><td class="value">Computer Science</td></tr>
-        <tr><td class="label">Experience</td><td class="colon">:</td><td class="value">20 months</td></tr>
-        <tr><td class="label">Based on</td><td class="colon">:</td><td class="value">Dhaka, Bangladesh</td></tr>
-      </table>`,
-
-    skills: () => `
-      <div class="terminal-msg info">
-        <div style="margin-bottom: 6px;"><strong>TECHNICAL TOOLBOX &amp; PROFICIENCY:</strong></div>
-        <div style="line-height: 1.8;">
-          <div>• HTML5 / CSS3  ...................... <span style="color:#7ee787; font-weight:600;">78%</span></div>
-          <div>• JavaScript    ...................... <span style="color:#7ee787; font-weight:600;">78%</span></div>
-          <div>• Python        ...................... <span style="color:#7ee787; font-weight:600;">78%</span></div>
-          <div>• React.js      ...................... <span style="color:#7ee787; font-weight:600;">78%</span></div>
-          <div>• Figma / UI    ...................... <span style="color:#7ee787; font-weight:600;">85%</span></div>
-        </div>
-      </div>`,
-
-    repos: () => `
-      <div class="terminal-msg info">
-        <div><strong>FEATURED REPOSITORIES:</strong></div>
-        <div style="margin-top: 4px;">1. <a href="#repos" style="color:#58a6ff; font-weight:600; text-decoration:none;">DataScienceEcosystem</a> — IBM Data Science tools lab <span style="color:#f0883e;">★ 0</span></div>
-        <div>2. <a href="#repos" style="color:#58a6ff; font-weight:600; text-decoration:none;">iplome-using-python</a> — Generative diploma certificate generator <span style="color:#f0883e;">★ 0</span></div>
-        <div>3. <a href="#repos" style="color:#58a6ff; font-weight:600; text-decoration:none;">AutomateQG</a> — Automated question generation scripts <span style="color:#f0883e;">★ 0</span></div>
-        <div>4. <a href="#repos" style="color:#58a6ff; font-weight:600; text-decoration:none;">questiongg-discord-bot</a> — Competitive Discord trivia bot <span style="color:#f0883e;">★ 0</span></div>
-        <div>5. <a href="#repos" style="color:#58a6ff; font-weight:600; text-decoration:none;">ibm-data-science-tools-lab</a> — Jupyter Notebook lab <span style="color:#f0883e;">★ 2</span></div>
-      </div>`,
-
-    contact: () => `
-      <div class="terminal-msg success">
-        <div><strong>GET IN TOUCH:</strong></div>
-        <div style="margin-top: 6px; line-height: 1.8;">
-          <div>• Email: <a href="mailto:hellorayhan09niloy@gmail.com" style="color:#7ee787; text-decoration:none;">hellorayhan09niloy@gmail.com</a></div>
-          <div>• LinkedIn: <a href="https://linkedin.com/in/rayhan09niloy" target="_blank" rel="noopener noreferrer" style="color:#58a6ff; text-decoration:none;">linkedin.com/in/rayhan09niloy</a></div>
-          <div>• X / Twitter: <a href="https://x.com/rayhan09niloy" target="_blank" rel="noopener noreferrer" style="color:#58a6ff; text-decoration:none;">@rayhan09niloy</a></div>
-          <div>• Location: Dhaka, Bangladesh</div>
-        </div>
-      </div>`,
-
-    help: () => `
-      <div class="terminal-msg info">
-        <div><strong>AVAILABLE COMMANDS:</strong></div>
-        <div style="margin-top: 4px;"><span style="color:#58a6ff; font-weight:600;">whoami</span>   - Print identity, role &amp; background</div>
-        <div><span style="color:#58a6ff; font-weight:600;">skills</span>   - List technical skills and proficiency</div>
-        <div><span style="color:#58a6ff; font-weight:600;">repos</span>    - List highlighted open-source projects</div>
-        <div><span style="color:#58a6ff; font-weight:600;">contact</span>  - Display email and social channels</div>
-        <div><span style="color:#58a6ff; font-weight:600;">date</span>     - Display current local date &amp; time</div>
-        <div><span style="color:#58a6ff; font-weight:600;">echo [t]</span> - Echo arguments back to terminal</div>
-        <div><span style="color:#58a6ff; font-weight:600;">clear</span>    - Reset terminal screen log</div>
-      </div>`,
-
-    date: () => `
-      <div class="terminal-msg info">${new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'medium' })}</div>`,
-
-    ls: () => `
-      <div class="terminal-msg info">
-        <span style="color:#58a6ff;">whoami</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        <span style="color:#58a6ff;">skills/</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        <span style="color:#58a6ff;">repos/</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        <span style="color:#7ee787;">contact.sh</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        <span style="color:#d2a8ff;">info.json</span>
-      </div>`,
-
-    cat: (args) => {
-      const file = args.trim().toLowerCase();
-      if (file === 'info.json') {
-        return `
-          <div class="terminal-msg info">
-            <pre style="font-family: inherit; margin: 0; color: #79c0ff;">{\n  "name": "Rayhan Ahmed",\n  "role": "Product Designer",\n  "status": "Available for opportunities",\n  "openSource": true\n}</pre>
-          </div>`;
-      }
-      return `<div class="terminal-msg error">cat: ${file || 'unspecified'}: No such file or directory</div>`;
-    },
-
-    sudo: () => `
-      <div class="terminal-msg error">Permission denied: nice try! Rayhan is the only root user here 😉</div>`,
+  const terminalInput = document.getElementById('terminalInput');
+  const commandButtons = document.querySelectorAll('.command-button');
+  const commandDescriptions = {
+    '--help': 'Show this command list',
+    whoami: 'Show profile and background',
+    skills: 'List tools and focus areas',
+    repos: 'List selected repositories',
+    contact: 'Show contact details and social links',
+    date: 'Print the current local date and time',
+    'echo <text>': 'Print text to the terminal',
+    clear: 'Clear the terminal history'
   };
+  const commandHistory = [];
+  let historyIndex = 0;
 
-  // Aliases
-  COMMANDS['--help'] = COMMANDS.help;
-  COMMANDS['-h'] = COMMANDS.help;
-  COMMANDS['toolbox'] = COMMANDS.skills;
-  COMMANDS['projects'] = COMMANDS.repos;
-  COMMANDS['email'] = COMMANDS.contact;
-  COMMANDS['socials'] = COMMANDS.contact;
+  const skills = [
+    ['HTML', 'Markup', 'Interface structure'],
+    ['CSS', 'Styling', 'Responsive visual design'],
+    ['JavaScript', 'Programming', 'Interactive experiences'],
+    ['Python', 'Programming', 'Data science and automation'],
+    ['React', 'Library', 'Component-based interfaces']
+  ];
 
-  function runTerminalCommand(rawInput) {
-    if (!rawInput && rawInput !== '') return;
-    const trimmed = rawInput.trim();
-    if (!trimmed) return;
+  const repositories = [
+    ['iplome-using-python', 'Python', 'Generative certificate and diploma design tool', '0 stars'],
+    ['ibm-data-science-tools-lab', 'Jupyter NB', 'Data science languages, libraries, and tools practice lab', '2 stars'],
+    ['questiongg-discord-bot', 'Python', 'Timed trivia bot with answer verification and a player leaderboard', '0 stars']
+  ];
 
-    // Save to command history
-    commandHistory.push(trimmed);
-    historyIndex = commandHistory.length;
+  const isTerminalPage = terminalHistory && terminalEntries && terminalForm && terminalInput;
 
-    // Handle clear specially
-    if (trimmed.toLowerCase() === 'clear' || trimmed.toLowerCase() === 'cls') {
-      terminalHistory.innerHTML = '';
-      return;
-    }
+  if (isTerminalPage) {
+    const scrollToLatest = () => {
+      terminalHistory.scrollTop = terminalHistory.scrollHeight;
+    };
 
-    // Split into command name and arguments
-    const parts = trimmed.split(/\s+/);
-    const cmd = parts[0].toLowerCase();
-    const args = parts.slice(1).join(' ');
+    const appendOutput = (command, output) => {
+      const entry = document.createElement('article');
+      entry.className = 'terminal-entry';
 
-    let outputHtml = '';
+      const commandLine = document.createElement('div');
+      commandLine.className = 'terminal-command-line';
 
-    if (cmd === 'echo') {
-      const safeText = args.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      outputHtml = `<div class="terminal-msg">${safeText || ''}</div>`;
-    } else if (COMMANDS[cmd]) {
-      outputHtml = COMMANDS[cmd](args);
-    } else {
-      const safeCmd = cmd.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      outputHtml = `<div class="terminal-msg error">bash: command not found: "${safeCmd}". Type <span style="color:#58a6ff;">help</span> to see available commands.</div>`;
-    }
+      const prompt = document.createElement('span');
+      prompt.className = 'terminal-prompt';
+      for (const [className, text] of [
+        ['terminal-host', 'github@rayhan09niloy'],
+        ['terminal-separator', ':'],
+        ['terminal-path', '~'],
+        ['terminal-dollar', '$']
+      ]) {
+        const segment = document.createElement('span');
+        segment.className = className;
+        segment.textContent = text;
+        prompt.appendChild(segment);
+      }
 
-    // Create log entry in terminal history
-    const entry = document.createElement('div');
-    entry.className = 'terminal-log-entry';
-    entry.innerHTML = `
-      <div class="terminal-prompt-line">
-        <span class="t-user">github@rayhan09niloy</span><span class="t-sep">:</span><span class="t-path">~</span><span class="t-dollar">$</span>
-        <span class="t-cmd">${trimmed.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>
-      </div>
-      <div class="terminal-output-block">${outputHtml}</div>
-    `;
+      const typedCommand = document.createElement('span');
+      typedCommand.className = 'terminal-command';
+      typedCommand.textContent = command;
 
-    terminalHistory.appendChild(entry);
+      commandLine.append(prompt, typedCommand);
+      entry.appendChild(commandLine);
 
-    // Scroll to bottom
-    terminalShell.scrollTop = terminalShell.scrollHeight;
-  }
+      if (output !== null && output !== undefined) {
+        if (output.links) {
+          const repoLinks = document.createElement('div');
+          repoLinks.className = 'terminal-repo-links';
+          output.links.forEach(({ name, href }) => {
+            const row = document.createElement('div');
+            row.className = 'terminal-repo-link-row';
 
-  // Form submission / Enter key
-  if (terminalForm && terminalInput) {
-    terminalForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const val = terminalInput.value;
+            const link = document.createElement('a');
+            link.className = 'terminal-value-link';
+            link.href = href;
+            link.textContent = '(link)';
+
+            row.append(document.createTextNode(`${name} `), link);
+            repoLinks.appendChild(row);
+          });
+          entry.appendChild(repoLinks);
+          terminalEntries.appendChild(entry);
+          scrollToLatest();
+          return;
+        }
+
+        if (output.rows) {
+          const data = document.createElement('div');
+          data.className = 'terminal-data';
+          output.rows.forEach(([label, value]) => {
+            const row = document.createElement('div');
+            row.className = 'terminal-data-row';
+
+            const labelCell = document.createElement('span');
+            labelCell.className = 'data-label';
+            labelCell.textContent = label;
+
+            const colon = document.createElement('span');
+            colon.className = 'data-colon';
+            colon.textContent = ':';
+
+            const valueCell = document.createElement('span');
+            if (value && typeof value === 'object' && value.href) {
+              const link = document.createElement('a');
+              link.className = 'terminal-value-link';
+              link.href = value.href;
+              link.textContent = value.text;
+              if (value.external) {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+              }
+              valueCell.appendChild(link);
+            } else {
+              valueCell.textContent = value;
+            }
+
+            row.append(labelCell, colon, valueCell);
+            data.appendChild(row);
+          });
+          entry.appendChild(data);
+          terminalEntries.appendChild(entry);
+          scrollToLatest();
+          return;
+        }
+
+        const outputBlock = document.createElement('pre');
+        outputBlock.className = 'terminal-output';
+        outputBlock.textContent = output;
+        entry.appendChild(outputBlock);
+      }
+
+      terminalEntries.appendChild(entry);
+      scrollToLatest();
+    };
+
+    const runCommand = (rawCommand) => {
+      const commandLine = rawCommand.trim();
+      if (!commandLine) return;
+
+      commandHistory.push(commandLine);
+      historyIndex = commandHistory.length;
+
+      const [name, ...argumentParts] = commandLine.split(/\s+/);
+      const command = name.toLowerCase();
+      const args = argumentParts.join(' ');
+
+      if (command === 'clear' || command === 'cls') {
+        terminalEntries.replaceChildren();
+        scrollToLatest();
+        return;
+      }
+
+      let output;
+      if (command === '--help' || command === 'help' || command === '-h') {
+        const commandRows = Object.entries(commandDescriptions)
+          .map(([availableCommand, description]) => [availableCommand, description]);
+        output = { rows: [['Usage', '<command> [arguments]'], ...commandRows] };
+      } else if (command === 'whoami') {
+        output = {
+          rows: [
+            ['Name', 'Rayhan Ahmed'],
+            ['Role', 'Product Designer'],
+            ['Level', 'Entry-level/Junior'],
+            ['Education', 'Diploma in-Engineering (Major: Computer Science)'],
+            ['Based on', 'Dhaka, Bangladesh']
+          ]
+        };
+      } else if (command === 'skills') {
+        output = {
+          rows: skills.map(([name, category, focus]) => [name, `${category} — ${focus}`])
+        };
+      } else if (command === 'repos' || command === 'projects') {
+        const matchingRepositories = args
+          ? repositories.filter(([name]) => name.includes(args.toLowerCase()))
+          : repositories;
+        output = matchingRepositories.length
+          ? {
+            links: matchingRepositories.map(([name]) => ({ name, href: '#' }))
+          }
+          : `No repository matched "${args}".`;
+      } else if (command === 'contact') {
+        output = {
+          rows: [
+            ['Email', { text: 'hellorayhan09niloy@gmail.com', href: 'mailto:hellorayhan09niloy@gmail.com' }],
+            ['GitHub', { text: 'github.com/rayhan09niloy', href: 'https://github.com/rayhan09niloy', external: true }],
+            ['LinkedIn', { text: 'linkedin.com/in/rayhan09niloy', href: 'https://linkedin.com/in/rayhan09niloy', external: true }],
+            ['X', { text: 'x.com/rayhan09niloy', href: 'https://x.com/rayhan09niloy', external: true }],
+            ['Behance', { text: 'behance.net/rayhan09niloy', href: 'https://behance.net/rayhan09niloy', external: true }]
+          ]
+        };
+      } else if (command === 'date') {
+        output = new Date().toLocaleString();
+      } else if (command === 'echo') {
+        output = args;
+      } else {
+        output = `bash: ${name}: command not found. Type --help to see available commands.`;
+      }
+
+      appendOutput(commandLine, output);
+    };
+
+    terminalForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      runCommand(terminalInput.value);
       terminalInput.value = '';
-      runTerminalCommand(val);
+      terminalInput.focus();
     });
 
-    // History navigation and tab autocompletion
-    terminalInput.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (commandHistory.length > 0 && historyIndex > 0) {
-          historyIndex--;
+    terminalInput.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (historyIndex > 0) {
+          historyIndex -= 1;
           terminalInput.value = commandHistory[historyIndex];
         }
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
+      } else if (event.key === 'ArrowDown') {
+        event.preventDefault();
         if (historyIndex < commandHistory.length - 1) {
-          historyIndex++;
+          historyIndex += 1;
           terminalInput.value = commandHistory[historyIndex];
         } else {
           historyIndex = commandHistory.length;
           terminalInput.value = '';
         }
-      } else if (e.key === 'Tab') {
-        e.preventDefault();
-        const current = terminalInput.value.trim().toLowerCase();
-        const available = ['whoami', 'skills', 'repos', 'contact', 'clear', 'help', 'date', 'echo'];
-        const match = available.find(c => c.startsWith(current));
-        if (match) {
-          terminalInput.value = match;
-        }
+      } else if (event.key === 'Tab') {
+        event.preventDefault();
+        const input = terminalInput.value.trim().toLowerCase();
+        const match = Object.keys(commandDescriptions)
+          .filter((command) => !command.includes(' '))
+          .find((command) => command.startsWith(input));
+        if (match) terminalInput.value = match;
       }
+    });
+
+    commandButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const command = button.dataset.command;
+        if (!command) return;
+        if (command === 'clear') {
+          terminalEntries.replaceChildren();
+          scrollToLatest();
+        } else {
+          runCommand(command);
+        }
+        terminalInput.value = '';
+        terminalInput.focus();
+      });
     });
   }
-
-  // Click on any --help command button
-  helpCmdButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const cmd = btn.getAttribute('data-cmd');
-      if (cmd) {
-        if (terminalInput) {
-          terminalInput.value = '';
-        }
-        runTerminalCommand(cmd);
-        if (terminalInput) {
-          terminalInput.focus();
-        }
-      }
-    });
-  });
 });
