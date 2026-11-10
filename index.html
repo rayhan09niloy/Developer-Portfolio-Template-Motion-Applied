@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rayhan Ahmed — Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Scanline overlay -->
+  <div class="scanline-overlay"></div>
+
+  <!-- Floating cursor glow -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <main class="container">
+
+    <!-- ═══════════════ HERO SECTION (Cybernetic Identity Card) ═══════════════ -->
+    <section class="hero" id="hero">
+      <div class="hero-card" data-animate="fade-up">
+        <!-- Top meta header -->
+        <div class="hero-top-bar">
+          <span class="hero-identity-tag">PORTFOLIO</span>
+          <span class="hero-handle-tag">@rayhan09niloy</span>
+        </div>
+
+        <!-- Hero main content grid -->
+        <div class="hero-body">
+          <div class="hero-content">
+            <p class="hero-greeting" data-animate="fade-up">HELLO, WORLD. I'M</p>
+
+            <pre class="ascii-name" aria-label="Rayhan Ahmed"> /$$$$$$$    /$$$$$$   /$$   /$$  /$$   /$$   /$$$$$$   /$$   /$$
+| $$__  $$  /$$__  $$ |  $$ /$$/ | $$  | $$  /$$__  $$ | $$$ | $$
+| $$  \ $$ | $$  \ $$  \  $$$$/  | $$  | $$ | $$  \ $$ | $$$$| $$
+| $$$$$$$/ | $$$$$$$$   \  $$/   | $$$$$$$$ | $$$$$$$$ | $$ $$ $$
+| $$__  $$ | $$__  $$    | $$    | $$__  $$ | $$__  $$ | $$  $$$$
+| $$  \ $$ | $$  | $$    | $$    | $$  | $$ | $$  | $$ | $$\  $$$
+| $$  | $$ | $$  | $$    | $$    | $$  | $$ | $$  | $$ | $$ \  $$
+|__/  |__/|__/  |__/     |__/    |__/  |__/ |__/  |__/ |__/  \__/
+
+  /$$$$$$   /$$   /$$  /$$      /$$  /$$$$$$$$  /$$$$$$$
+ /$$__  $$ | $$  | $$ | $$$    /$$$ | $$_____/ | $$__  $$
+| $$  \ $$ | $$  | $$ | $$$$  /$$$$ | $$       | $$  \ $$
+| $$$$$$$$ | $$$$$$$$ | $$ $$/$$ $$ | $$$$$    | $$  | $$
+| $$__  $$ | $$__  $$ | $$  $$$| $$ | $$__/    | $$  | $$
+| $$  | $$ | $$  | $$ | $$\  $ | $$ | $$       | $$  | $$
+| $$  | $$ | $$  | $$ | $$ \/  | $$ | $$$$$$$$ | $$$$$$$/
+|__/  |__/ |__/  |__/ |__/     |__/|________/ |________/</pre>
+
+            <div class="hero-info" data-animate="fade-up" data-delay="300">
+              <p class="hero-location">Dhaka, Bangladesh</p>
+              <p class="hero-role">Product Designer &amp; Developer</p>
+              <p class="hero-detail">MedTech &amp; FinTech Focused • CS Background</p>
+            </div>
+          </div>
+
+          <!-- Hero right: Profile with original uncropped dimensions -->
+          <div class="hero-image-pane" data-animate="fade-left" data-delay="250">
+            <img src="assets/profile.png" alt="Rayhan Ahmed" class="hero-profile-img" />
+          </div>
+        </div>
+
+        <!-- Integrated Hero Stats Bar -->
+        <div class="hero-stats-bar" data-animate="fade-up" data-delay="400">
+          <div class="hero-stat-col">
+            <span class="hero-stat-label">REPOSITORIES</span>
+            <span class="hero-stat-value" data-count="12">0</span>
+          </div>
+          <div class="hero-stat-dot">•</div>
+          <div class="hero-stat-col">
+            <span class="hero-stat-label">STARS</span>
+            <span class="hero-stat-value" data-count="4">0</span>
+          </div>
+          <div class="hero-stat-dot">•</div>
+          <div class="hero-stat-col">
+            <span class="hero-stat-label">CONTRIBUTIONS</span>
+            <span class="hero-stat-value" data-count="12">0</span>
+          </div>
+          <div class="hero-stat-dot">•</div>
+          <div class="hero-stat-col">
+            <span class="hero-stat-label">FOLLOWERS</span>
+            <span class="hero-stat-value" data-count="8">0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
+    <div class="section-divider" data-animate="line-draw">
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ═══════════════ WHOAMI SECTION ═══════════════ -->
+    <section class="whoami-section" id="whoami">
+      <div class="section-header" data-animate="fade-up">
+        <img src="assets/flash.svg" alt="" class="section-icon" />
+        <h2 class="section-title">Whoami</h2>
+      </div>
+
+      <!-- Interactive Terminal Window (Image 2 style) -->
+      <div class="terminal-window" data-animate="fade-up" data-delay="100">
+        <!-- Terminal Title Bar -->
+        <div class="terminal-window-header">
+          <div class="terminal-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="terminal-window-title">GITHUB / USER PROFILE</div>
+          <div class="terminal-window-meta">
+            <span class="terminal-status-dot"></span>
+            <span class="terminal-status-text">active</span>
+          </div>
+        </div>
+
+        <!-- Terminal Window Body (2 columns: interactive shell + help guide) -->
+        <div class="terminal-window-body">
+          <!-- Left Column: Interactive Terminal -->
+          <div class="terminal-shell" id="terminalShell">
+            <div class="terminal-history" id="terminalHistory">
+              <!-- Initial command output -->
+              <div class="terminal-log-entry">
+                <div class="terminal-prompt-line">
+                  <span class="t-user">github@rayhan09niloy</span><span class="t-sep">:</span><span class="t-path">~</span><span class="t-dollar">$</span>
+                  <span class="t-cmd">whoami</span>
+                </div>
+                <div class="terminal-output-block">
+                  <table class="info-table">
+                    <tr><td class="label">Name</td><td class="colon">:</td><td class="value">Rayhan</td></tr>
+                    <tr><td class="label">Role</td><td class="colon">:</td><td class="value">Product</td></tr>
+                    <tr><td class="label">Level</td><td class="colon">:</td><td class="value">Entry</td></tr>
+                    <tr><td class="label">Industry</td><td class="colon">:</td><td class="value">FinTech</td></tr>
+                    <tr><td class="label">Background</td><td class="colon">:</td><td class="value">Computer Science</td></tr>
+                    <tr><td class="label">Experience</td><td class="colon">:</td><td class="value">20 months</td></tr>
+                    <tr><td class="label">Based on</td><td class="colon">:</td><td class="value">Dhaka, Bangladesh</td></tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Input Row -->
+            <form class="terminal-input-row" id="terminalForm" onsubmit="return false;">
+              <span class="t-user">github@rayhan09niloy</span><span class="t-sep">:</span><span class="t-path">~</span><span class="t-dollar">$</span>
+              <input type="text" id="terminalInput" class="terminal-input" placeholder="type a command..." autocomplete="off" spellcheck="false" />
+              <span class="terminal-cursor">█</span>
+            </form>
+          </div>
+
+          <!-- Right Column: --help Command Guide -->
+          <div class="terminal-help-pane">
+            <div class="help-pane-header">
+              <span class="help-flag">--help</span>
+              <span class="help-label">COMMAND GUIDE</span>
+            </div>
+            <p class="help-intro">Click any command to run it in the terminal, or type directly:</p>
+            
+            <div class="help-cmd-list">
+              <button class="help-cmd-item" type="button" data-cmd="whoami">
+                <span class="help-cmd-badge">whoami</span>
+                <span class="help-cmd-desc">Print profile &amp; bio</span>
+              </button>
+              <button class="help-cmd-item" type="button" data-cmd="skills">
+                <span class="help-cmd-badge">skills</span>
+                <span class="help-cmd-desc">List technical stack &amp; %</span>
+              </button>
+              <button class="help-cmd-item" type="button" data-cmd="repos">
+                <span class="help-cmd-badge">repos</span>
+                <span class="help-cmd-desc">List highlighted projects</span>
+              </button>
+              <button class="help-cmd-item" type="button" data-cmd="contact">
+                <span class="help-cmd-badge">contact</span>
+                <span class="help-cmd-desc">Get contact &amp; social links</span>
+              </button>
+              <button class="help-cmd-item" type="button" data-cmd="clear">
+                <span class="help-cmd-badge">clear</span>
+                <span class="help-cmd-desc">Reset terminal screen</span>
+              </button>
+            </div>
+
+            <div class="help-pane-footer">
+              <div class="help-shortcuts">
+                <span class="key-hint">↵ Enter to run</span>
+                <span class="key-hint">↑ / ↓ history</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
+    <div class="section-divider" data-animate="line-draw">
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ═══════════════ SELECTED WORK ═══════════════ -->
+    <section class="selected-work" id="repos">
+      <div class="section-header" data-animate="fade-up">
+        <img src="assets/flash.svg" alt="" class="section-icon" />
+        <h2 class="section-title">ls ./selected_repo</h2>
+      </div>
+
+      <!-- Featured Repo -->
+      <div class="repo-featured" data-animate="fade-up" data-delay="100">
+        <div class="repo-placeholder">
+          <div class="repo-placeholder-inner">
+            <div class="code-rain" id="codeRain"></div>
+          </div>
+        </div>
+        <div class="repo-info-panel">
+          <a href="#" class="repo-name-link">DataScienceEcosystem</a>
+          <p class="repo-desc">A hands-on lab practice for IBM Data Science Course Summarising  DS/AI Tools.</p>
+          <div class="repo-meta">
+            <span class="repo-lang">Python</span>
+            <span class="repo-stars">
+              <img src="assets/star.svg" alt="" class="star-icon" />
+              0
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="repo-featured right" data-animate="fade-up" data-delay="200">
+        <div class="repo-info-panel">
+          <a href="#" class="repo-name-link">iplome-using-python</a>
+          <p class="repo-desc">Diploma is a generative attribute based art creation tool. Designed for simplicity, Can generate unique certificate/diploma type designs from inputted data.</p>
+          <div class="repo-meta">
+            <span class="repo-lang">Python</span>
+            <span class="repo-stars">
+              <img src="assets/star.svg" alt="" class="star-icon" />
+              0
+            </span>
+          </div>
+        </div>
+        <div class="repo-placeholder">
+          <div class="repo-placeholder-inner">
+            <div class="matrix-text" id="matrixText"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Smaller Repos Grid -->
+      <div class="repo-grid" data-animate="fade-up" data-delay="300">
+        <div class="repo-card" data-tilt>
+          <a href="#" class="repo-name-link">AutomateQG</a>
+          <p class="repo-desc">A collection of automated question generation scripts.</p>
+          <div class="repo-meta">
+            <span class="repo-lang">Python</span>
+            <span class="repo-stars">
+              <img src="assets/star.svg" alt="" class="star-icon" />
+              0
+            </span>
+          </div>
+        </div>
+        <div class="repo-card" data-tilt>
+          <a href="#" class="repo-name-link">QuestionGG</a>
+          <p class="repo-desc">A competitive Discord trivia bot that serves timed questions.</p>
+          <div class="repo-meta">
+            <span class="repo-lang">Python</span>
+            <span class="repo-stars">
+              <img src="assets/star.svg" alt="" class="star-icon" />
+              0
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Row -->
+      <div class="repo-grid three-col" data-animate="fade-up" data-delay="400">
+        <div class="repo-card" data-tilt>
+          <a href="#" class="repo-name-link">ibm-data-science-tools-lab</a>
+          <p class="repo-desc">Jupyter Notebook practice lab summarizing data science languages, libraries, and tools for the IBM Data Science Course 2.</p>
+          <div class="repo-meta">
+            <span class="repo-lang">Jupyter NB</span>
+            <span class="repo-stars">
+              <img src="assets/star.svg" alt="" class="star-icon" />
+              2
+            </span>
+          </div>
+        </div>
+        <div class="repo-card" data-tilt>
+          <a href="#" class="repo-name-link">questiongg-discord-bot</a>
+          <p class="repo-desc">A competitive Discord trivia bot that serves timed questions from a local JSON data bank, auto-verifies answers, and maintains a real-time player leaderboard.</p>
+          <div class="repo-meta">
+            <span class="repo-lang">Python</span>
+            <span class="repo-stars">
+              <img src="assets/star.svg" alt="" class="star-icon" />
+              0
+            </span>
+          </div>
+        </div>
+        <div class="repo-card" data-tilt>
+          <a href="#" class="repo-name-link">questiongg-discord-bot</a>
+          <p class="repo-desc">A competitive Discord trivia bot that serves timed questions from a local JSON data bank, auto-verifies answers, and maintains a real-time player leaderboard.</p>
+          <div class="repo-meta">
+            <span class="repo-lang">Python</span>
+            <span class="repo-stars">
+              <img src="assets/star.svg" alt="" class="star-icon" />
+              0
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
+    <div class="section-divider" data-animate="line-draw">
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ═══════════════ TOOLBOX ═══════════════ -->
+    <section class="toolbox-section" id="toolbox">
+      <div class="section-header" data-animate="fade-up">
+        <img src="assets/flash.svg" alt="" class="section-icon" />
+        <h2 class="section-title">ls toolbox</h2>
+      </div>
+
+      <div class="toolbox-card" data-animate="fade-up" data-delay="100">
+        <div class="skill-bar" data-animate="bar-fill" data-delay="200">
+          <div class="skill-info">
+            <span class="skill-dot" style="background: #e34c26;"></span>
+            <span class="skill-name">HTML</span>
+            <span class="skill-percent">78%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #e34c26;"></div>
+          </div>
+        </div>
+        <div class="skill-bar" data-animate="bar-fill" data-delay="300">
+          <div class="skill-info">
+            <span class="skill-dot" style="background: #264de4;"></span>
+            <span class="skill-name">CSS</span>
+            <span class="skill-percent">78%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #264de4;"></div>
+          </div>
+        </div>
+        <div class="skill-bar" data-animate="bar-fill" data-delay="400">
+          <div class="skill-info">
+            <span class="skill-dot" style="background: #f7df1e;"></span>
+            <span class="skill-name">JavaScript</span>
+            <span class="skill-percent">78%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #f7df1e;"></div>
+          </div>
+        </div>
+        <div class="skill-bar" data-animate="bar-fill" data-delay="500">
+          <div class="skill-info">
+            <span class="skill-dot" style="background: #3776ab;"></span>
+            <span class="skill-name">Python</span>
+            <span class="skill-percent">78%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #3776ab;"></div>
+          </div>
+        </div>
+        <div class="skill-bar" data-animate="bar-fill" data-delay="600">
+          <div class="skill-info">
+            <span class="skill-dot" style="background: #61dafb;"></span>
+            <span class="skill-name">React</span>
+            <span class="skill-percent">78%</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="--fill-width: 78%; --bar-color: #61dafb;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
+    <div class="section-divider" data-animate="line-draw">
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ═══════════════ CONTRIBUTION ACTIVITY ═══════════════ -->
+    <section class="contribution-section" id="contributions">
+      <div class="section-header" data-animate="fade-up">
+        <img src="assets/flash.svg" alt="" class="section-icon" />
+        <h2 class="section-title">ls contribution_activity</h2>
+      </div>
+
+      <div class="contribution-card" data-animate="fade-up" data-delay="100">
+        <div class="contribution-header">
+          <span class="contribution-count">12 Contributions in this year</span>
+          <div class="contribution-legend">
+            <span class="legend-text">Less</span>
+            <span class="legend-box" style="background: #3c474e;"></span>
+            <span class="legend-box" style="background: #3e718f;"></span>
+            <span class="legend-box" style="background: #4d9ccb;"></span>
+            <span class="legend-box" style="background: #1095e4;"></span>
+            <span class="legend-text">More</span>
+          </div>
+        </div>
+        <div class="contribution-grid" id="contributionGrid">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION DIVIDER ═══════════════ -->
+    <div class="section-divider" data-animate="line-draw">
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- ═══════════════ FOOTER / CONTACT ═══════════════ -->
+    <footer class="footer-section" id="contact">
+      <div class="footer-content" data-animate="fade-up">
+        <div class="email-row">
+          <div class="email-display">
+            <span>hellorayhan09niloy@gmail.com</span>
+          </div>
+          <button class="copy-btn" id="copyEmail" aria-label="Copy email">
+            <img src="assets/copy.svg" alt="Copy" />
+          </button>
+        </div>
+        <div class="social-links">
+          <a href="https://linkedin.com/in/rayhan09niloy" target="_blank" rel="noopener noreferrer" class="social-pill">LinkedIn</a>
+          <a href="https://x.com/rayhan09niloy" target="_blank" rel="noopener noreferrer" class="social-pill">X (Twitter)</a>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-pill">Facebook</a>
+          <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="social-pill">Behance</a>
+        </div>
+      </div>
+
+      <div class="footer-profile" data-animate="fade-up" data-delay="200">
+        <div class="footer-profile-card">
+          <img src="assets/profile.png" alt="Rayhan Ahmed" class="footer-avatar" />
+          <div class="footer-profile-info">
+            <span class="footer-badge">@rayhan09niloy</span>
+            <h3 class="footer-name">Rayhan Ahmed</h3>
+            <p class="footer-bio">Product Designer | FinTech & MedTech Enthusiast</p>
+          </div>
+          <div class="footer-level">4</div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast">Email copied to clipboard!</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
