@@ -39,6 +39,7 @@ git clone "https://github.com/rayhan09niloy/Developer-Portfolio-Template-Motion-
 ```
 
 ## Project Structure
+```
 ├── index.html        # Main landing page
 ├── terminal.html     # Interactive terminal page
 ├── site.css          # Stylesheets and animation files
@@ -46,3 +47,12 @@ git clone "https://github.com/rayhan09niloy/Developer-Portfolio-Template-Motion-
 ├── assets/
 │   └── Icons/        # Project icons
 └── README.md         # Documentation
+```
+
+## Deployment
+1. Push your repository to GitHub.
+2. Import the project into your Vercel Dashboard.
+3. Keep default settings and click Deploy.
+
+## License
+Distributed under the MIT License. See LICENSE for more information.
